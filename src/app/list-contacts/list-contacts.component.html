@@ -1,0 +1,60 @@
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Procurar: </span>
+  </div>
+
+  <input type="text" class="form-control" [(ngModel)]="search">
+</div>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th scope="col">CPF</th>
+        <th scope="col">Telefone</th>
+        <th scope="col">Email</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="!isLoading; else loading;">
+        <tr *ngFor="let record of contacts | filter:search as teste; index as i" routerLink="/contatos/{{ record.id }}">
+          <td>
+            {{ record.id }}
+          </td>
+          <td>
+            {{ record.name }}
+          </td>
+          <td>
+            {{ record.cpf | formatter:'([0-9]{3})([0-9]{3})([0-9]{3})([0-9]{2})':'$1.$2.$3-$4' }}
+          </td>
+          <td>
+            {{ record.phone | formatter:'([0-9]{2})([0-9]{5})([0-9]{4})':'($1) $2-$3'  }}
+          </td>
+          <td>
+            {{ record.email }}
+          </td>
+          <td>
+            <button class="btn btn-danger" (click)="delContact($event, i)">
+              Apagar
+            </button>
+          </td>
+        </tr>
+      </ng-container>
+
+      <ng-container *ngIf="!isLoading && contacts.length === 0">
+        <tr>
+          <td colspan="6">Nenhum cadastro</td>
+        </tr>
+      </ng-container>
+
+      <ng-template #loading>
+        <tr>
+          <td colspan="6">Carregando os dados...</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,54 @@
+<form class="col-md-6 col-center" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+  <div class="alert alert-success" role="alert" *ngIf="wasSent">
+    Salvo com sucesso
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-12 mb-3">
+      <label for="contactName" class="float-left">Nome: </label>
+      <input [ngClass]="{ 'is-invalid': f.name.errors }" autocomplete="new-password" type="text" class="form-control"
+        id="contactName" placeholder="Nome" formControlName="name">
+
+      <div *ngIf="f.name.errors" class="invalid-feedback text-left">
+        <div *ngIf="f.name.errors.validrequirednospace">Nome é obrigatório</div>
+      </div>
+    </div>
+
+    <div class="col-md-12 mb-3">
+      <label for="contactCPF" class="float-left">CPF: </label>
+      <input [ngClass]="{ 'is-invalid': f.cpf.errors }" mask="000.000.000-00" autocomplete="new-password" type="text"
+        class="form-control" id="contactCPF" placeholder="CPF" formControlName="cpf">
+
+      <div *ngIf="f.cpf.errors" class="invalid-feedback text-left">
+        <div *ngIf="f.cpf.errors.validrequirednospace">CPF é obrigatório</div>
+        <div *ngIf="f.cpf.errors.validcpf">CPF inválido</div>
+        <div *ngIf="f.cpf.errors.validexists">CPF já existe</div>
+      </div>
+    </div>
+
+    <div class="col-md-12 mb-3">
+      <label for="contactPhone" class="float-left">Telefone: </label>
+      <input [ngClass]="{ 'is-invalid': f.phone.errors }" mask="(00) 00000-0000" autocomplete="new-password" type="text"
+        class="form-control" id="contactPhone" placeholder="Telefone" formControlName="phone">
+
+      <div *ngIf="f.phone.errors" class="invalid-feedback text-left">
+        <div *ngIf="f.phone.errors.validrequirednospace">Telefone é obrigatório</div>
+        <div *ngIf="f.phone.errors.minlength">Telefone inválido</div>
+      </div>
+    </div>
+
+    <div class="col-md-12 mb-3">
+      <label for="contactEmail" class="float-left">Email: </label>
+      <input [ngClass]="{ 'is-invalid': f.email.errors }" autocomplete="new-password" type="text" class="form-control"
+        id="contactEmail" placeholder="Email" formControlName="email">
+
+      <div *ngIf="f.email.errors" class="invalid-feedback text-left">
+        <div *ngIf="f.email.errors.validrequirednospace">Email é obrigatório</div>
+        <div *ngIf="f.email.errors.email">Email inválido</div>
+        <div *ngIf="f.email.errors.validexists">Email já existe</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="w-100 btn btn-lg btn-success" [disabled]="this.contactForm.invalid" type="submit">Salvar</button>
+</form>
